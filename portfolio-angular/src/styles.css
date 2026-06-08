@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importando fontes fofas */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600&display=swap');
+
+:root {
+  --cor-fundo: #fff5f7;       /* Rosa bem clarinho */
+  --cor-primaria: #ffb7b2;    /* Rosa marshmallow */
+  --cor-secundaria: #ffdac1;  /* Pêssego suave */
+  --cor-texto: #6d5959;       /* Marrom quentinho */
+  --cor-card: #ffffff;        /* Branco puro */
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
