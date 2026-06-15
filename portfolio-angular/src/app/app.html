@@ -1,49 +1,17 @@
-<div class="portfolio-container">
+<mat-toolbar color="primary">
+  <span>Meu Portfólio</span>
+  <span class="espacador"></span>
   
-  
-  <header class="profile-header">
-    <h1>{{ title() }}</h1>
-    <p class="subtitle">Bem-vindo(a)! ✨</p>
-  </header>
+  <a mat-button routerLink="/" routerLinkActive="link-ativo" [routerLinkActiveOptions]="{exact: true}">Início</a>
+  <a mat-button routerLink="/sobre" routerLinkActive="link-ativo">Sobre</a>
+  <a mat-button routerLink="/projetos" routerLinkActive="link-ativo">Projetos</a>
+  <a mat-button routerLink="/contato" routerLinkActive="link-ativo">Contato</a>
+</mat-toolbar>
 
-  <!-- Seção Sobre Mim -->
-  <section class="secao-fofa">
-    <h2><span class="icon">✨</span> Sobre Mim</h2>
-    <p>
-      Olá! Meu nome é <strong>Caroline Monteiro Schefer</strong>. Sou uma desenvolvedora em construção, 
-      apaixonada por tecnologia, design e por criar interfaces.
-      Atualmente estou explorando o Angular!
-    </p>
-  </section>
+<main style="padding: 24px;">
+  <router-outlet></router-outlet>
+</main>
 
-  <!-- Seção Meus Projetos -->
-  <section class="secao-fofa">
-    <h2><span class="icon">🚀</span> Meus Projetos</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <h3>Projeto 1</h3>
-        <p>Descrição fofinha do seu primeiro grande projeto aqui.</p>
-        <a href="#" target="_blank">Ver Projeto ✨</a>
-      </div>
-      <div class="project-card">
-        <h3>Projeto 2</h3>
-        <p>Descrição fofinha do seu segundo grande projeto aqui.</p>
-        <a href="#" target="_blank">Ver Projeto ✨</a>
-      </div>
-    </div>
-  </section>
-
-
-
-  
-  <section class="secao-fofa contato-email">
-    <h2><span class="icon">💌</span> Contato </h2>
-    <p>Para dúvidas, mande um e-mail para:</p>
-    <a href="mailto:seu.email@exemplo.com" class="email-destaque">schefercaroline3@gmail.com</a>
-  </section>
-
-  <footer>
-    <p>Feito por Caroline</p>
-  </footer>
-
-</div>
+<footer>
+  <p>Feito por Caroline</p>
+</footer>

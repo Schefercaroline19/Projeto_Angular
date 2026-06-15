@@ -1,22 +1,16 @@
-/* Importando fontes fofas */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600&display=swap');
 
 :root {
-  --cor-fundo: #fff5f7;       /* Rosa bem clarinho */
+  --cor-fundo: #fff5f7;       /* Rosa bem clarinho de fundo */
   --cor-primaria: #ffb7b2;    /* Rosa marshmallow */
   --cor-secundaria: #ffdac1;  /* Pêssego suave */
-  --cor-texto: #6d5959;       /* Marrom quentinho */
-  --cor-card: #ffffff;        /* Branco puro */
+  --cor-texto: #6d5959;       /* Marrom quentinho para os textos */
 }
 
 body {
-  background-color: var(--cor-fundo);
-  color: var(--cor-texto);
-  font-family: 'Quicksand', sans-serif;
+  background-color: var(--cor-fundo) !important;
+  font-family: 'Quicksand', sans-serif !important;
+  color: var(--cor-texto) !important;
   margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  padding: 0;
 }
