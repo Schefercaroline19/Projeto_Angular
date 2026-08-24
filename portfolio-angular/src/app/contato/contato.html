@@ -1,17 +1,17 @@
-<div class="portfolio-container">
-  <mat-card class="secao-fofa">
-    <mat-card-content class="contato-content">
-      <h2><span class="icon">💌</span> Vamos conversar?</h2>
-      <p>Se você gostou do meu portfólio ou quer trocar uma ideia sobre, me chame!</p>
-      
-      <div class="social-links">
-        <a href="https://github.com/Schefercaroline19" target="_blank" class="botao-social">GitHub</a>
-      </div>
-
-      <div class="email-box">
-        <p>Ou mande um e-mail direto para:</p>
-        <span class="email-tag">schefercaroline3@gmail.com</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+<!-- src/app/contato/contato.html -->
+<h2>Fale comigo</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label for="nome">Nome</label>
+  <input id="nome" type="text" formControlName="nome">
+  <label for="email">E-mail</label>
+  <input id="email" type="email" formControlName="email">
+  <label for="mensagem">Mensagem</label>
+  <textarea id="mensagem" formControlName="mensagem" rows="4"></textarea>
+  <!-- botao desabilita enquanto envia; troca o texto -->
+  <button type="submit" [disabled]="enviando">
+    {{ enviando ? 'Enviando...' : 'Enviar' }}
+  </button>
+</form>
+<!-- estados de retorno -->
+@if (sucesso) { <p class="ok">{{ sucesso }}</p> }
+@if (erro)    { <p class="erro">{{ erro }}</p> }
