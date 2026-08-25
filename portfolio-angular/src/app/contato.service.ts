@@ -15,7 +15,7 @@ export interface RespostaContato { // o que a API DEVOLVE no 201
 export class ContatoService {
   private http = inject(HttpClient);
   // Troque pela SUA URL publica do Codespace (porta 8000), igual na Aula 17.
-  private url = 'http://localhost:8000/api/contato.php';
+  private url = 'https://bookish-parakeet-7vqxpxxvp6p9hpw6q-8000.app.github.dev/api/contato.php';
 
   enviar(dados: NovoContato): Observable<RespostaContato> {
     return this.http.post<RespostaContato>(this.url, dados); // 2o arg = corpo

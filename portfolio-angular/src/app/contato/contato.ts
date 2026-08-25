@@ -1,7 +1,7 @@
 // src/app/contato/contato.ts
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { ContatoService } from '../contato.service';
+import { ContatoService, NovoContato } from '../contato.service';
 
 @Component({
   selector: 'app-contato',
@@ -27,7 +27,7 @@ export class Contato {
       return;
     }
     this.enviando = true; // desabilita o botao enquanto envia
-    this.service.enviar(this.form.getRawValue()).subscribe({
+    this.service.enviar(this.form.getRawValue() as NovoContato).subscribe({
       next: (resp) => {
         this.sucesso = resp.mensagem;
         this.form.reset(); // limpa o formulario
