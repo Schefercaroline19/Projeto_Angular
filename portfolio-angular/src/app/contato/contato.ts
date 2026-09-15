@@ -6,13 +6,18 @@ import { ContatoService, NovoContato } from '../contato.service';
 @Component({
   selector: 'app-contato',
   standalone: true,
-  imports: [ReactiveFormsModule],   // libera formGroup/formControlName no HTML
+  imports: [ReactiveFormsModule],
   templateUrl: './contato.html',
 })
 export class Contato {
   private fb = inject(FormBuilder);
   private service = inject(ContatoService);
-  enviando = false; sucesso = ''; erro = ''; // estados de tela
+  
+  // Estados da tela
+  enviando = false;
+  sucesso = '';
+  erro = '';
+  enviado = false; // NOVO: controla se já foi enviado com sucesso
 
   form = this.fb.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -21,21 +26,44 @@ export class Contato {
   });
 
   onSubmit() {
-    this.sucesso = ''; this.erro = '';
-    if (this.form.invalid) {         // trava: nem chama a API se invalido
-      this.form.markAllAsTouched(); // forca exibir os erros de campo
+    // Reset dos estados anteriores
+    this.sucesso = '';
+    this.erro = '';
+    this.enviado = false;
+    
+    // Validação do formulário
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
-    this.enviando = true; // desabilita o botao enquanto envia
+    
+    // Inicia o envio
+    this.enviando = true;
+    
     this.service.enviar(this.form.getRawValue() as NovoContato).subscribe({
       next: (resp) => {
-        this.sucesso = resp.mensagem;
-        this.form.reset(); // limpa o formulario
+        // Sucesso!
+        this.sucesso = resp.mensagem || 'Mensagem enviada com sucesso! ✨';
+        this.enviado = true;
+        this.form.reset(); // limpa o formulário
         this.enviando = false;
+        
+        // Limpa a mensagem de sucesso após 5 segundos
+        setTimeout(() => {
+          this.sucesso = '';
+          this.enviado = false;
+        }, 5000);
       },
-      error: () => {
-        this.erro = 'Nao foi possivel enviar. Tente novamente.';
-        this.enviando = false; // reabilita o botao no erro
+      error: (err) => {
+        // Erro!
+        console.error('Erro ao enviar:', err);
+        this.erro = 'Não foi possível enviar. Tente novamente. 😿';
+        this.enviando = false;
+        
+        // Limpa a mensagem de erro após 5 segundos
+        setTimeout(() => {
+          this.erro = '';
+        }, 5000);
       },
     });
   }

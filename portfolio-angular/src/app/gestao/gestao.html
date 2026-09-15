@@ -1,0 +1,136 @@
+<!-- src/app/gestao/gestao.html -->
+<section class="gestao">
+  <h2>⚙️ Área de Gestão</h2>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <h3>{{ editandoId ? '✏️ Editar projeto' : '➕ Adicionar projeto' }}</h3>
+
+    <!-- Nome -->
+    <div class="campo">
+      <label for="nome">Nome do projeto *</label>
+      <input 
+        id="nome" 
+        type="text" 
+        formControlName="nome"
+        placeholder="Digite o nome do projeto"
+        [class.invalido]="form.controls.nome.touched && form.controls.nome.invalid">
+      
+      @if (form.controls.nome.touched && form.controls.nome.invalid) {
+        <p class="erro-campo">
+          @if (form.controls.nome.errors?.['required']) {
+            ⚠️ Nome é obrigatório
+          }
+          @if (form.controls.nome.errors?.['minlength']) {
+            ⚠️ Nome deve ter pelo menos 3 caracteres
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Descrição -->
+    <div class="campo">
+      <label for="descricao">Descrição</label>
+      <textarea 
+        id="descricao" 
+        formControlName="descricao" 
+        rows="3"
+        placeholder="Descreva o projeto"></textarea>
+    </div>
+
+    <!-- Tecnologias -->
+    <div class="campo">
+      <label for="tecnologias">Tecnologias</label>
+      <input 
+        id="tecnologias" 
+        formControlName="tecnologias"
+        placeholder="Ex: Angular, PHP, MySQL">
+    </div>
+
+    <!-- Link GitHub -->
+    <div class="campo">
+      <label for="link_github">Link do GitHub</label>
+      <input 
+        id="link_github" 
+        formControlName="link_github"
+        placeholder="https://github.com/seu-projeto">
+    </div>
+
+    <!-- Ano -->
+    <div class="campo">
+      <label for="ano">Ano *</label>
+      <input 
+        id="ano" 
+        type="number" 
+        formControlName="ano"
+        placeholder="2026"
+        [class.invalido]="form.controls.ano.touched && form.controls.ano.invalid">
+      
+      @if (form.controls.ano.touched && form.controls.ano.invalid) {
+        <p class="erro-campo">
+          @if (form.controls.ano.errors?.['required']) {
+            ⚠️ Ano é obrigatório
+          }
+          @if (form.controls.ano.errors?.['min']) {
+            ⚠️ Ano deve ser maior que 2000
+          }
+          @if (form.controls.ano.errors?.['max']) {
+            ⚠️ Ano deve ser menor que 2030
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Status -->
+    <div class="campo">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="rascunho">📝 Rascunho</option>
+        <option value="publicado">🚀 Publicado</option>
+        <option value="arquivado">📦 Arquivado</option>
+      </select>
+    </div>
+
+    <!-- Botão -->
+    <button type="submit" [disabled]="salvando || form.invalid">
+      {{ salvando ? '⏳ Salvando...' : (editandoId ? '💾 Salvar alterações' : '➕ Adicionar projeto') }}
+    </button>
+
+    <!-- Mensagem de erro do formulário -->
+    @if (erroSalvar) {
+      <p class="erro-global">❌ {{ erroSalvar }}</p>
+    }
+  </form>
+
+  <!-- Lista de projetos -->
+  <h3>📋 Projetos cadastrados</h3>
+
+  <!-- Estados da lista -->
+  @if (carregando) {
+    <p class="mensagem-carregando">⏳ Carregando projetos...</p>
+  }
+
+  @if (erroCarregar) {
+    <p class="erro-global">❌ {{ erroCarregar }}</p>
+  }
+
+  @if (!carregando && !erroCarregar && projetos.length === 0) {
+    <p class="mensagem-vazio">📭 Você ainda não cadastrou nenhum projeto.</p>
+  }
+
+  <!-- Lista de projetos -->
+  @for (p of projetos; track p.id) {
+    <div class="linha-projeto">
+      <span class="projeto-info">
+        <strong>{{ p.nome }}</strong> ({{ p.ano }})
+        <span class="status-badge" [class]="p.status">
+          {{ p.status === 'rascunho' ? '📝' : p.status === 'publicado' ? '🚀' : '📦' }}
+          {{ p.status }}
+        </span>
+      </span>
+      <div class="projeto-acoes">
+        <button type="button" class="btn-editar" (click)="editar(p)">✏️ Editar</button>
+        <button type="button" class="btn-excluir" (click)="excluir(p)">🗑️ Excluir</button>
+      </div>
+    </div>
+  }
+</section>

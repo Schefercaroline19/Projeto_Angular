@@ -1,0 +1,488 @@
+/* src/app/contato/contato.css */
+
+/* ========== CONTAINER PRINCIPAL ========== */
+.contato-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #fffafc;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.08);
+}
+
+/* ========== HEADER ========== */
+.contato-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #fce4ec;
+}
+
+.contato-header h2 {
+  color: #d81b60;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+}
+
+.subtitulo {
+  color: #6a1b4d;
+  font-size: 1.05rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ========== FORMULÁRIO ========== */
+.contato-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ========== ROW DO CAMPO ========== */
+.campo-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 0.5rem 0;
+}
+
+/* ========== LABEL (LADO ESQUERDO) ========== */
+.campo-label {
+  min-width: 140px;
+  max-width: 140px;
+  padding-top: 0.8rem;
+  font-weight: 600;
+  color: #4a1a2e;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.campo-label::after {
+  content: ' *';
+  color: #e91e63;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.label-icon {
+  font-size: 1.2rem;
+}
+
+/* ========== WRAPPER DO INPUT (LADO DIREITO) ========== */
+.campo-input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* ========== INPUTS ========== */
+.campo-input-wrapper input,
+.campo-input-wrapper textarea {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 2.5px solid #f8bbd0;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  transition: all 0.3s ease;
+  background-color: #fff5f7;
+  color: #4a1a2e;
+  box-sizing: border-box;
+}
+
+.campo-input-wrapper input::placeholder,
+.campo-input-wrapper textarea::placeholder {
+  color: #d4a0b0;
+  font-weight: 400;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.campo-input-wrapper input:focus,
+.campo-input-wrapper textarea:focus {
+  outline: none;
+  border-color: #e91e63;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 5px rgba(233, 30, 99, 0.1);
+}
+
+.campo-input-wrapper input:hover:not(:focus),
+.campo-input-wrapper textarea:hover:not(:focus) {
+  border-color: #f06292;
+  background-color: #fff8f9;
+}
+
+/* ========== ESTADO DE ERRO ========== */
+.campo-input-wrapper input.invalido,
+.campo-input-wrapper textarea.invalido {
+  border-color: #d81b60;
+  background-color: #fce4ec;
+  border-width: 3px;
+}
+
+.campo-input-wrapper input.invalido:focus,
+.campo-input-wrapper textarea.invalido:focus {
+  border-color: #c2185b;
+  box-shadow: 0 0 0 5px rgba(216, 27, 96, 0.12);
+}
+
+/* ========== MENSAGENS DE ERRO ========== */
+.mensagem-erro {
+  color: #c2185b;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-weight: 500;
+  padding-top: 0.2rem;
+}
+
+.mensagem-erro small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+/* ========== CAMPO MENSAGEM - CENTRALIZADO ========== */
+.mensagem-row {
+  align-items: center;
+  background: linear-gradient(135deg, #fff5f7, #fce4ec);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  margin: 0 -0.5rem;
+  border: 2px solid #f8bbd0;
+}
+
+.mensagem-label {
+  padding-top: 0;
+  font-size: 1.1rem;
+}
+
+.mensagem-wrapper {
+  flex: 1;
+}
+
+.mensagem-wrapper textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 1rem 1.2rem;
+}
+
+.mensagem-wrapper textarea::placeholder {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+/* ========== HELPER DO CAMPO ========== */
+.campo-helper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 4px 0 4px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ========== CONTADOR DE CARACTERES ========== */
+.contador-caracteres {
+  font-size: 0.85rem;
+  color: #bb8f9f;
+  font-weight: 500;
+  padding: 2px 12px;
+  background: #fce4ec;
+  border-radius: 20px;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.mensagem-wrapper:focus-within .contador-caracteres {
+  color: #d81b60;
+  background: #f8bbd0;
+}
+
+/* ========== BOTÃO ========== */
+.botao-row {
+  margin-top: 0.5rem;
+}
+
+.botao-row .campo-label {
+  visibility: hidden;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(135deg, #e91e63, #f06292);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  letter-spacing: 0.8px;
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.25);
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(233, 30, 99, 0.35);
+  background: linear-gradient(135deg, #c2185b, #d81b60);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.2);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+button[type="submit"].enviando {
+  background: linear-gradient(135deg, #f57c00, #ff9800);
+  box-shadow: 0 6px 20px rgba(245, 124, 0, 0.3);
+}
+
+button[type="submit"].enviando:hover:not(:disabled) {
+  background: linear-gradient(135deg, #e65100, #f57c00);
+  box-shadow: 0 10px 30px rgba(245, 124, 0, 0.4);
+}
+
+/* ========== INFO RODAPÉ ========== */
+.info-rodape {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #bb8f9f;
+  margin-top: 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* ========== MENSAGENS DE RETORNO ========== */
+.mensagem-sucesso,
+.mensagem-erro {
+  margin-top: 1.5rem;
+  padding: 1.4rem 1.8rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  animation: slideIn 0.4s ease;
+}
+
+.mensagem-sucesso {
+  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+  border-left: 5px solid #e91e63;
+  color: #880e4f;
+}
+
+.mensagem-erro {
+  background: linear-gradient(135deg, #fce4ec, #ffcdd2);
+  border-left: 5px solid #c2185b;
+  color: #880e4f;
+}
+
+.msg-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.mensagem-sucesso strong,
+.mensagem-erro strong {
+  display: block;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.mensagem-sucesso p,
+.mensagem-erro p {
+  margin: 6px 0 0 0;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 768px) {
+  .contato-container {
+    padding: 25px 20px;
+    border-radius: 18px;
+  }
+
+  .contato-header h2 {
+    font-size: 2rem;
+  }
+
+  .subtitulo {
+    font-size: 0.95rem;
+  }
+
+  .campo-row {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+  }
+
+  .campo-label {
+    min-width: 100%;
+    max-width: 100%;
+    padding-top: 0;
+    font-size: 1rem;
+  }
+
+  .mensagem-row {
+    padding: 1.2rem 1.2rem;
+    margin: 0;
+  }
+
+  .mensagem-label {
+    font-size: 1rem;
+  }
+
+  .campo-input-wrapper input,
+  .campo-input-wrapper textarea {
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+  }
+
+  .mensagem-wrapper textarea {
+    min-height: 100px;
+  }
+
+  button[type="submit"] {
+    font-size: 1.05rem;
+    padding: 1rem 1.5rem;
+    border-radius: 14px;
+  }
+
+  .botao-row .campo-label {
+    display: none;
+  }
+
+  .campo-helper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contato-container {
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+
+  .contato-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .subtitulo {
+    font-size: 0.9rem;
+  }
+
+  .campo-label {
+    font-size: 0.9rem;
+  }
+
+  .campo-input-wrapper input,
+  .campo-input-wrapper textarea {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 10px;
+  }
+
+  .mensagem-row {
+    padding: 1rem;
+  }
+
+  .mensagem-wrapper textarea {
+    min-height: 80px;
+  }
+
+  button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    gap: 10px;
+  }
+
+  .mensagem-sucesso,
+  .mensagem-erro {
+    padding: 1rem 1.2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .msg-icon {
+    font-size: 1.6rem;
+  }
+
+  .contato-form {
+    gap: 1.5rem;
+  }
+
+  .contador-caracteres {
+    font-size: 0.8rem;
+    padding: 2px 10px;
+  }
+}
+
+/* ========== SCROLLBAR PERSONALIZADA ========== */
+.mensagem-wrapper textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mensagem-wrapper textarea::-webkit-scrollbar-track {
+  background: #fce4ec;
+  border-radius: 4px;
+}
+
+.mensagem-wrapper textarea::-webkit-scrollbar-thumb {
+  background: #f06292;
+  border-radius: 4px;
+}
+
+.mensagem-wrapper textarea::-webkit-scrollbar-thumb:hover {
+  background: #e91e63;
+}
+
+/* ========== EFEITO DE FOCO ========== */
+.campo-row:focus-within .campo-label {
+  color: #d81b60;
+}
+
+.mensagem-row:focus-within {
+  border-color: #e91e63;
+  box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.08);
+}

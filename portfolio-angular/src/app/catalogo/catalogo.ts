@@ -1,22 +1,38 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { TecnologiaService, Tecnologia } from '../tecnologia.service';
+// src/app/catalogo/catalogo.ts
+import { Component, OnInit, inject } from '@angular/core';
+import { ProjetoService } from '../services/projeto.service';
 
 @Component({
   selector: 'app-catalogo',
-  imports: [MatCardModule],
-  templateUrl: './catalogo.html'
+  templateUrl: './catalogo.html',
+  styleUrls: ['./catalogo.css']
 })
 export class Catalogo implements OnInit {
-  private service = inject(TecnologiaService);
-  tecnologias: Tecnologia[] = [];
-  carregando = true;
+  projetos: any[] = [];
+  carregando = false;
   erro = '';
 
+  private projetoService = inject(ProjetoService);
+
   ngOnInit() {
-    this.service.listar().subscribe({
-      next: (lista) => { this.tecnologias = lista; this.carregando = false; },
-      error: () => { this.erro = 'Falha ao carregar o catalogo.'; this.carregando = false; }
+    this.carregarPublicados();
+  }
+
+  carregarPublicados() {
+    this.carregando = true;
+    this.erro = '';
+    
+    // Nível B: filtra apenas publicados
+    this.projetoService.listar(false).subscribe({
+      next: (dados) => {
+        this.projetos = dados;
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error('Erro:', err);
+        this.erro = 'Não foi possível carregar o catálogo.';
+        this.carregando = false;
+      }
     });
   }
 }

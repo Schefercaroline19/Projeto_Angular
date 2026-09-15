@@ -1,17 +1,130 @@
 <!-- src/app/contato/contato.html -->
-<h2>Fale comigo</h2>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <label for="nome">Nome</label>
-  <input id="nome" type="text" formControlName="nome">
-  <label for="email">E-mail</label>
-  <input id="email" type="email" formControlName="email">
-  <label for="mensagem">Mensagem</label>
-  <textarea id="mensagem" formControlName="mensagem" rows="4"></textarea>
-  <!-- botao desabilita enquanto envia; troca o texto -->
-  <button type="submit" [disabled]="enviando">
-    {{ enviando ? 'Enviando...' : 'Enviar' }}
-  </button>
-</form>
-<!-- estados de retorno -->
-@if (sucesso) { <p class="ok">{{ sucesso }}</p> }
-@if (erro)    { <p class="erro">{{ erro }}</p> }
+<div class="contato-container">
+  <div class="contato-header">
+    <h2>💗 Vamos conversar?</h2>
+    <p class="subtitulo">Preencha o formulário abaixo e entrarei em contato em breve!</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="contato-form">
+    
+    <!-- Campo Nome -->
+    <div class="campo-row">
+      <label for="nome" class="campo-label">
+        <span class="label-icon"></span> Nome completo
+      </label>
+      <div class="campo-input-wrapper">
+        <input 
+          id="nome" 
+          type="text" 
+          formControlName="nome"
+          [class.invalido]="form.get('nome')?.invalid && form.get('nome')?.touched">
+        
+        @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+          <div class="mensagem-erro">
+            @if (form.get('nome')?.errors?.['required']) {
+              <small>✧ Nome é obrigatório</small>
+            }
+            @if (form.get('nome')?.errors?.['minlength']) {
+              <small>✧ Nome deve ter pelo menos 3 caracteres</small>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Campo E-mail -->
+    <div class="campo-row">
+      <label for="email" class="campo-label">
+        <span class="label-icon"></span> E-mail
+      </label>
+      <div class="campo-input-wrapper">
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email"
+          [class.invalido]="form.get('email')?.invalid && form.get('email')?.touched">
+        
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          <div class="mensagem-erro">
+            @if (form.get('email')?.errors?.['required']) {
+              <small>✧ E-mail é obrigatório</small>
+            }
+            @if (form.get('email')?.errors?.['email']) {
+              <small>✧ Digite um e-mail válido </small>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Campo Mensagem - COM LABEL AO LADO E CENTRALIZADO -->
+    <div class="campo-row mensagem-row">
+      <label for="mensagem" class="campo-label mensagem-label">
+        <span class="label-icon"></span> Mensagem
+      </label>
+      <div class="campo-input-wrapper mensagem-wrapper">
+        <textarea 
+          id="mensagem" 
+          formControlName="mensagem" 
+          rows="5"
+          placeholder="Descreva o motivo do seu contato"
+          [class.invalido]="form.get('mensagem')?.invalid && form.get('mensagem')?.touched">
+        </textarea>
+        
+        <div class="campo-helper">
+          @if (form.get('mensagem')?.invalid && form.get('mensagem')?.touched) {
+            <div class="mensagem-erro">
+              @if (form.get('mensagem')?.errors?.['required']) {
+                <small>✧ Mensagem é obrigatória</small>
+              }
+              @if (form.get('mensagem')?.errors?.['minlength']) {
+                <small>✧ Mensagem deve ter pelo menos 10 caracteres</small>
+              }
+            </div>
+          }
+          <div class="contador-caracteres">
+            {{ form.get('mensagem')?.value?.length || 0 }}/500
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de Envio -->
+    <div class="campo-row botao-row">
+      <div class="campo-label"></div>
+      <div class="campo-input-wrapper">
+        <button 
+          type="submit" 
+          [disabled]="enviando || form.invalid"
+          [class.enviando]="enviando">
+          @if (!enviando) {
+            <span class="btn-icon">🌸</span>
+          }
+          {{ enviando ? ' Enviando...' : 'Enviar mensagem' }}
+        </button>
+        <p class="info-rodape">* Campos obrigatórios</p>
+      </div>
+    </div>
+
+    <!-- Mensagens de Retorno -->
+    @if (sucesso) { 
+      <div class="mensagem-sucesso">
+        <span class="msg-icon">✨</span>
+        <div>
+          <strong>Mensagem enviada com sucesso!</strong>
+          <p>{{ sucesso }}</p>
+        </div>
+      </div> 
+    }
+    
+    @if (erro) { 
+      <div class="mensagem-erro">
+        <span class="msg-icon">😿</span>
+        <div>
+          <strong>Ops! Algo deu errado.</strong>
+          <p>{{ erro }}</p>
+        </div>
+      </div> 
+    }
+  </form>
+</div>
