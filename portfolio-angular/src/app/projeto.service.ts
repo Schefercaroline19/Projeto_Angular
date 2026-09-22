@@ -16,7 +16,7 @@ export interface Projeto {
 @Injectable({ providedIn: 'root' })
 export class ProjetoService {
   private http = inject(HttpClient);
-  private url = 'https://bookish-parakeet-7vqxpxxvp6p9hpw6q-8000.app.github.dev/api/projetos.php';
+  private url = 'https://bookish-parakeet-7vqxpxxvp6p9hpw6q-3000.app.github.dev/api/projetos';
 
   // Nível B: lista todos (gestão) ou apenas publicados (catálogo)
   listar(todos?: boolean): Observable<Projeto[]> {
