@@ -1,17 +1,62 @@
 // api-node/server.js - a API do Portifolio em Node (aula21)
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require ('jsonwebtoken');
 const pool = require('./db');
+
 const app = express();
 const PORTA = 3000;
+// A chave que assina os tokens
+const SEGREDO = 'frase-longa-que-so-eu-sei';
 
 app.use(cors());
 
 app.use(express.json());
 
+// Middleware
+function autenticar(req, res, next) {
+  const cabecalho = req.headers.authorization ?? '';
+  const token = cabecalho.replace('Bearer ', '');
+  if (!token) {
+    return res.status(401).json({ erro: 'Token ausente' });
+  }
+  try {
+    req.usuario = jwt.verify(token, SEGREDO);
+    next();
+  } catch (erro) {
+    return res.status(401).json({ erro: 'Token invalido ou expirado' });
+  }
+}
+
+
 app.get('/', (req, res) => {
     res.send('API do Portifolio em Node:no ar');
 });
+
+// POST confere email e senha e devolve o token
+app.post('/api/login', async (req, res) => {
+  try {
+    const dados = req.body;
+    if (!dados || !dados.email || !dados.senha) {
+      return res.status(400).json({ erro: 'Informe email e senha' });
+    }
+    const [linhas] = await pool.execute('SELECT id, email, senha_hash FROM usuarios WHERE email = ?', [dados.email]);
+    const usuario = linhas[0];
+    if (!usuario) {
+      return res.status(401).json({ erro: 'Email ou senha invalidos' });
+    }
+    const confere = await bcrypt.compare(dados.senha, usuario.senha_hash);
+    if (!confere) {
+      return res.status(401).json({ erro: 'Email ou senha invalidos' });
+    }
+    const token = jwt.sign({ id: usuario.id, email: usuario.email }, SEGREDO, { expiresIn: '2h' });
+    res.json({ token });
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  }
+});
+
 
 app.get('/api/projetos', async (req, res) => {
 try {
@@ -36,7 +81,7 @@ try {
 }
 });
 
-app.post('/api/projetos', async (req, res) => {
+app.post('/api/projetos', autenticar, async (req, res) => {
   try {
     const dados = req.body;
     if (!dados || !dados.nome) {
@@ -53,7 +98,7 @@ app.post('/api/projetos', async (req, res) => {
   }
 });
 
-app.put('/api/projetos/:id', async (req, res) => {
+app.put('/api/projetos/:id', autenticar, async (req, res) => {
     try {
         const dados = req.body;
         if (!dados || !dados.nome) {
