@@ -41,10 +41,21 @@ Quem escreve precisa de um token. Antes do primeiro uso, crie a tabela e o dono:
     sudo mariadb dwii_db < sql/usuarios.sql
     cd api-node
     npm install
-    node criar-usuario.js dono@portfolio.dev portfolio2026
+    node criar-usuario.js dono@portfolio.dev <senha>
 
 Login e escrita com o token:
 
     curl -i -X POST http://localhost:3000/api/login -H "Content-Type: application/json" -d '{"email":"dono@portfolio.dev","senha":"portfolio2026"}'
     curl -i -X POST http://localhost:3000/api/projetos -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"nome":"Projeto com tranca","ano":2026}'
     curl -i -X PUT http://localhost:3000/api/projetos/8 -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"nome":"Projeto com tranca (editado)","ano":2026}'
+
+
+### Aula 25: o Portfolio em React
+
+O front novo nasce em `portfolio-react/` (Vite + React), ao lado do Angular. Para rodar:
+
+    cd portfolio-react
+    npm install
+    npm run dev
+
+A tela abre na porta 5173. Por enquanto os projetos sao fixos no `src/App.jsx`; a Aula 27 os traz da API.

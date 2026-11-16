@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-const jwt = require ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const pool = require('./db');
 
 const app = express();
@@ -11,7 +11,6 @@ const PORTA = 3000;
 const SEGREDO = 'frase-longa-que-so-eu-sei';
 
 app.use(cors());
-
 app.use(express.json());
 
 // Middleware
@@ -29,9 +28,8 @@ function autenticar(req, res, next) {
   }
 }
 
-
 app.get('/', (req, res) => {
-    res.send('API do Portifolio em Node:no ar');
+  res.send('API do Portifolio em Node:no ar');
 });
 
 // POST confere email e senha e devolve o token
@@ -57,28 +55,27 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-
 app.get('/api/projetos', async (req, res) => {
-try {
+  try {
     const sql = "SELECT id, nome , descricao, tecnologias, link_github, ano FROM projetos WHERE status = 'publicado' ORDER BY ano DESC, id";
     const [projetos] = await pool.query(sql);
     res.json(projetos);
-} catch (erro) {
+  } catch (erro) {
     res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
-}
+  }
 });
 
 app.get('/api/projetos/:id', async (req, res) => {
-try {
-  const sql = "SELECT id, nome, descricao, tecnologias, link_github, ano FROM projetos WHERE id = ? AND status = 'publicado'";
-  const [linhas] = await pool.execute(sql, [req.params.id])
-  if (linhas.length == 0) {
-    return res.status(404).json({ erro: 'Projeto nao encontrado' });
+  try {
+    const sql = "SELECT id, nome, descricao, tecnologias, link_github, ano FROM projetos WHERE id = ? AND status = 'publicado'";
+    const [linhas] = await pool.execute(sql, [req.params.id]);
+    if (linhas.length == 0) {
+      return res.status(404).json({ erro: 'Projeto nao encontrado' });
+    }
+    res.json(linhas[0]);
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor:' + erro.message });
   }
-  res.json(linhas[0]);
-} catch (erro) {
-    res.status(500).json({ erro: 'Falha no servidor:' + erro.message});
-}
 });
 
 app.post('/api/projetos', autenticar, async (req, res) => {
@@ -99,37 +96,37 @@ app.post('/api/projetos', autenticar, async (req, res) => {
 });
 
 app.put('/api/projetos/:id', autenticar, async (req, res) => {
-    try {
-        const dados = req.body;
-        if (!dados || !dados.nome) {
-            return res.status(400).json({ erro: 'Informe pelo menos o nome do projeto' });
-        }
-        const sql = 'UPDATE projetos SET nome = ?, descricao = ?, tecnologias = ?, link_github = ?, ano = ? WHERE id = ?';
-        const [resultado] = await pool.execute(sql, [
-            dados.nome, dados.descricao ?? '', dados.tecnologias ?? '',
-            dados.link_github ?? '', dados.ano ?? new Date().getFullYear(), req.params.id
-        ]);
-        if (resultado.affectedRows === 0) {
-            return res.status(404).json({ erro: 'Projeto nao encontrado' });
-        }
-        res.json({ mensagem: 'Projeto atualizado' });
-    } catch (erro) {
-        res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  try {
+    const dados = req.body;
+    if (!dados || !dados.nome) {
+      return res.status(400).json({ erro: 'Informe pelo menos o nome do projeto' });
     }
+    const sql = 'UPDATE projetos SET nome = ?, descricao = ?, tecnologias = ?, link_github = ?, ano = ? WHERE id = ?';
+    const [resultado] = await pool.execute(sql, [
+      dados.nome, dados.descricao ?? '', dados.tecnologias ?? '',
+      dados.link_github ?? '', dados.ano ?? new Date().getFullYear(), req.params.id
+    ]);
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ erro: 'Projeto nao encontrado' });
+    }
+    res.json({ mensagem: 'Projeto atualizado' });
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  }
 });
 
-app.delete('/api/projetos/:id', async (req, res) => {
-    try {
-        const [resultado] = await pool.execute('DELETE FROM projetos WHERE id = ?', [req.params.id]);
+app.delete('/api/projetos/:id', autenticar, async (req, res) => {
+  try {
+    const [resultado] = await pool.execute('DELETE FROM projetos WHERE id = ?', [req.params.id]);
 
-        if (resultado.affectedRows === 0) {
-            return res.status(404).json({ erro: 'Projeto nao encontrado' });
-        }
-
-        res.status(204).end();
-    } catch (erro) {
-        res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ erro: 'Projeto nao encontrado' });
     }
+
+    res.status(204).end();
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  }
 });
 
 app.get('/api/tecnologias', async (req, res) => {
@@ -142,7 +139,6 @@ app.get('/api/tecnologias', async (req, res) => {
   }
 });
 
-
 app.listen(PORTA, () => {
-   console.log('API no ar em https://localhost:' + PORTA);
+  console.log('API no ar em http://localhost:' + PORTA);
 });
