@@ -1,6 +1,8 @@
 import Cabecalho from './Cabecalho.jsx';
 import CardProjeto from './CardProjeto.jsx';
-import Rodape from './Rodape.jsx'
+import Contato from './Contato.jsx';
+import Rodape from './Rodape.jsx';
+import projetos from  './projetos.js';
 
 
 function App() {
@@ -10,28 +12,18 @@ function App() {
     <main>
       <h2>Projetos</h2>
       <div className="cards">
-        <CardProjeto
-          nome="Portfolio Angular"
-          descricao="Meu Portfolio com Angular e Angular Material."
-          tecnologias="Angular, TypeScript"
-          link_github="https://github.com/seu-usuario/2026-DWII-portfolio-angular"
-          ano={2026}
-          />
+        {projetos.map((p) => (
           <CardProjeto
-          nome="API do Portfolio em PHP"
-          descricao="Endpoints de projetos e catalogo com PDO e MariaDB."
-          tecnologias="PHP, MariaDB"
-          link_github={null}
-          ano={2026}
-          />
-          <CardProjeto
-          nome="Sistema de Cadastro v1"
-          descricao="CRUD em PHP do 1o trimestre"
-          tecnologias="PHP, MariaDB, Bootstrap"
-          link_github={null}
-          ano={2026}
-          />
+              key={p.id}
+              nome={p.nome}
+              descricao={p.descricao}
+              tecnologias={p.tecnologias}
+              link_github={p.link_github}
+              ano={p.ano}
+              />
+        ))}
       </div>
+      <Contato />
     </main>
     <Rodape />
     </>
