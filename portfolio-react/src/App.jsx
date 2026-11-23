@@ -1,16 +1,44 @@
+import { useEffect, useState } from 'react';
+import API from './api.js';
 import Cabecalho from './Cabecalho.jsx';
 import CardProjeto from './CardProjeto.jsx';
+import Catalogo from './Catalogo.jsx';
 import Contato from './Contato.jsx';
 import Rodape from './Rodape.jsx';
-import projetos from  './projetos.js';
 
 
 function App() {
+  const [projetos, setProjetos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
+
+// buscarProjetos: pede a lista para a API e guarda a resposta no estado.
+async function buscarProjetos() {
+  try {
+    const resposta = await fetch(API + '/api/projetos');
+    if (!resposta.ok) {
+      throw new Error('a API respondeu ' + resposta.status);
+    }
+    const dados = await resposta.json();
+    setProjetos(dados);
+  } catch (falha) {
+    setErro('Não deu para carregar os projetos: ' + falha.message);
+  }
+  setCarregando(false);
+}
+
+// O efeito roda depois que a tela foi desenhada. A lista vazia do fim diz: 
+useEffect(() => {
+  buscarProjetos();
+}, []);
+
   return (
     <>
     <Cabecalho />
     <main>
       <h2>Projetos</h2>
+      {carregando && <p>Carregando projetos...</p>}
+      {erro && <p className="erro">{erro}</p>}
       <div className="cards">
         {projetos.map((p) => (
           <CardProjeto
@@ -23,6 +51,7 @@ function App() {
               />
         ))}
       </div>
+      <Catalogo />
       <Contato />
     </main>
     <Rodape />
